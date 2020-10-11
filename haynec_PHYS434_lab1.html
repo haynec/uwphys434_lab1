@@ -17,17 +17,15 @@
 <!-- 
 ##### SOURCE BEGIN #####
 clear, close all, clc
-
 %% 
 % # Normal distribution is a bell shaped, symmetrical distributions. It is presented 
-% by the letter Z as defined below.
+% by the letter Z as defined below. (im not sure what you mean when you say "presented by the letter Z?)
 %% 
 % $$Z=\frac{X-\mu }{\sigma }$$ 
 % 
 % X represents a random varible from a normal distribution. Based on that, $\sigma$ 
 % represents the standard deviation of the curve, and $\mu$ represents the mean. 
 % It is commonly used to model things like a grade distribution of a class. 
-
 x = linspace(-10,10,1000);
 sig = 1;
 mu = 0;
@@ -35,28 +33,21 @@ gaus = makedist("Normal",mu,sig);
 semilogy(x,pdf(gaus,x),"LineWidth",4);
 %% 
 % Here I plotted the integration of the gaussian curve without a log y-axis.
-
-
-
 Norm_Int = normcdf(x,mu, sig);
 plot(x,Norm_Int, "LineWidth",4)
-
 Ztable_check = normcdf(0.2, mu, sig)
 %% 
 % When checking the cumulative Z-value table for 0.2, they match at 0.5793
 % 
 % Here I am using $p=\frac{1}{\sigma \sqrt{2\pi }}\int_{-\infty }^x e^{-\frac{{\left(t-\mu 
 % \right)}^2 }{2\sigma^2 }} \mathrm{dt}$
-
 sig_val = norminv(Norm_Int, mu, sig);
 Sig = 3
-
 if Sig > 0 
     Percent_within_sig = Norm_Int(Sig*sig*50+500)
 else
     Percent_within_sig = 1-Norm_Int(Sig*sig*50+500)
 end
-
 %% 
 % Since I am integrating from -infinity my probabilities will vary from 0% up 
 % to 50% at the mean and then up to 100% at infinity. The specific probability 
@@ -73,7 +64,6 @@ end
 % 
 % $f\left(x:\sigma \right)=\frac{x}{\sigma^2 }e^{-\frac{x^2 }{2\sigma^2 }}$ 
 % where $\sigma$ is a scale parameter. 
-
 x = linspace(0,10,100000);
 sig =2
 d = random('Rayleigh', sig, [1,100000]);
@@ -82,15 +72,13 @@ hold on
 rayl = makedist("Rayleigh",sig);
 semilogy(x,pdf(rayl,x),"LineWidth",3);
 hold off
-
 %% 
 % 3. I will assume that this Rayleigh distribution is modeling a particularly 
 % hard final for a class. We'll assume that student A got a score of 3/10. We 
 % will find the sigma or standard deviation of student A's score and probability 
-% that student B will get a better score then student A. 
+% that student B will get a better score then student A. (i can see the probabilites calculated below but you should probably state the results in english, i could see the TA knocking points off for that.)
 % 
 % 
-
 y_rayl_vals = pdf(rayl,x);
 sum_rayl = 0;
 for k = 1:length(y_rayl_vals)
@@ -104,7 +92,6 @@ else
     sig_hyp = -(mean_rayl-hyp)/sig
 end
 prob = 1 - cdf(rayl, hyp)
-
 hyp2 = 9.5
 if mean_rayl<hyp2
    sig_hyp2 = (hyp2-mean_rayl)/sig
@@ -112,7 +99,6 @@ else
     sig_hyp = -(mean_rayl-hyp2)/sig
 end
 prob2 = 1 - cdf(rayl, hyp2)
-
 hyp3 = 0.2
 if mean_rayl<hyp3
    sig_hyp3 = (hyp3-mean_rayl)/sig
@@ -120,7 +106,6 @@ else
     sig_hyp3 = -(mean_rayl-hyp3)/sig
 end
 prob = 1 - cdf(rayl, hyp3)
-
 %% 
 % Choosing different values for the hypothetical value, in this case Student 
 % C got a 9.5/10 and Student D got a 0.2/10. The trend is the better the students 
@@ -128,15 +113,11 @@ prob = 1 - cdf(rayl, hyp3)
 % got a better score. The lower the students score is from the mean value, the 
 % more likely that another student got a better score as can be seen in the respective 
 % probabilities.
-
-
 %% 
 % The Poisson distribution is a quantized varient of the Gaussian distribution 
-% in a vagues sense. The main difference is that the Poisson distribution is qunatized 
-% meaning meansuraments are integers rather then floats. It could be used to measure 
+% in a vagues sense. The main difference is that the Poisson distribution is quantized
+% meaning measurements are integers rather then floats. It could be used to measure 
 % how many times some event occurs in a given time frame. 
-
-
 x = 0:10;
 poisson = makedist("Poisson", 'lambda',5); 
 %nu=1 makes a lorentz distribution as a special case
@@ -144,8 +125,6 @@ stairs(x-0.5,pdf(poisson,x),"LineWidth",4);
 set(gca,'YScale','log')
 %% 
 % This plot exhibits a gaussian like shape aside from the stair step apperance. 
-
-
 poisson = makedist("Poisson", 'lambda',3.4); 
 %nu=1 makes a lorentz distribution as a special case
 stairs(x-0.5,pdf(poisson,x),"LineWidth",4);
@@ -154,7 +133,6 @@ set(gca,'YScale','log')
 % As the mean of the plot gets closer to zero it becomes more apparent that 
 % this is not a gaussian distribution as there is a non-zero values for a 0 number 
 % of occurances, even with a large number of samples. 
-
 x=1:100;
 poisson = makedist("Poisson", 'lambda',1.1); 
 %nu=1 makes a lorentz distribution as a special case
@@ -168,24 +146,19 @@ set(gca,'YScale','log')
 % off an alpha particle. We will use a geiger counter to measure the number of 
 % alpha particles given off in a given time frame. We will specifically measure 
 % the probability that we got a value of 215 occurances in one minute
-
 x = 1:10:500;
 hyp = 215;
 poisson = makedist("Poisson", 'lambda',215.3); 
 %nu=1 makes a lorentz distribution as a special case
 stairs(x-0.5,pdf(poisson,x),"LineWidth",4);
 set(gca,'YScale','log')
-
 y_pois_vals = pdf(poisson,x);
 sum_pois = 0;
 for k = 1:length(y_pois_vals)
     sum_pois = y_pois_vals(k)*x(k) + sum_pois;
 end
-
 mean_pois = sum_pois/sum(y_pois_vals, 'all')
-
 prob = 1 - cdf(poisson, hyp)
-
 %% 
 % Since there is only a certain number of times you can count an event happening 
 % the count is obviously a quantized integer, meaning you can count that 215 alpha 
