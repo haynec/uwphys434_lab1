@@ -191,7 +191,7 @@ hold off
 % As the shape changes it approaches the appearance of a gaussian distribution 
 % after roughly 2 intervals looking at the linear y-scale plot. Looking at the 
 % logarithmic y-scale plot it takes at least 9 averages to start to resemble a 
-% normal distribution.
+% normal distribution. (maybe talk about why it only took 2 intervals to look gaussian, while a more skewed distribution could take longer)
 
 
 %% 
@@ -209,7 +209,7 @@ gaus = makedist("Normal",mu,sig);
 prob = 1 - cdf(gaus,y);
 sig_val = abs(icdf('Normal', prob, 0, 1));
 %% 
-% I recieve a sigma value of 4.2832. Not quite the 5 sigma value we need.
+% I recieve a sigma value of 4.2832. Not quite the 5 sigma value we need. (both of us should probably add a bit more explanation to what is happening in quesition 3 before spitting out sigma values with no context)
 % 
 % Version 2:
 
